@@ -22,7 +22,7 @@ public class AccountInfo {
     @ManyToOne
     @JoinColumn(name = "credit_bureau_id", nullable = false)
     private CreditBureau creditBureau;
-    @Column(name = " account_number",nullable = false)
+    @Column(name = " account_number", nullable = false)
     private String accountNumber;
     @Column(name = "account_status", nullable = false)
     private String accountStatus;
@@ -40,7 +40,7 @@ public class AccountInfo {
     private boolean isYourAccount;
     @Column(name = "last_payment_amount", nullable = false)
     private double lastPaymentAmount;
-    @Column (name = "last_payment_date")
+    @Column(name = "last_payment_date")
     private LocalDate lastPaymentDate;
     @Column(name = "loaded_at", nullable = false)
     private LocalDate loadedAt;

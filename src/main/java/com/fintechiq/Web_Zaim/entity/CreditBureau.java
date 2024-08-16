@@ -17,6 +17,6 @@ public class CreditBureau {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "loan_request_id", nullable = false )
+    @Column(name = "loan_request_id", nullable = false)
     private UUID loanRequestId;
 }
