@@ -2,11 +2,11 @@ spring:
   application:
     name: Web-Zaim
   datasource:
-    url: jdbc:postgresql://localhost:5432/your_database
-    username: your_username
-    password: your_password
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
   jpa:
     hibernate:
       ddl-auto: update
   liquibase:
-      change-log: classpath:db/changelog/db.changelog-master.xml
+      change-log: classpath:db/changelog/db.changelog-master.yaml
