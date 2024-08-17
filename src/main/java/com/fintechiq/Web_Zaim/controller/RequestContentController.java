@@ -1,6 +1,7 @@
 package com.fintechiq.Web_Zaim.controller;
 
 import com.fintechiq.Web_Zaim.service.RequestContentService;
+import com.fintechiq.Web_Zaim.service.StopFactorCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import java.io.IOException;
 public class RequestContentController {
 
     private final RequestContentService requestContentService;
+    private final StopFactorCalculator stopFactorCalculator;
 
     @PostMapping
     public void saveRequestContent(@RequestBody String jsonContent) throws IOException {
@@ -27,5 +29,9 @@ public class RequestContentController {
     public String getRequestContent(@PathVariable Long id) {
         var requestContent = requestContentService.getRequestContent(id);
         return requestContent != null ? requestContent.getContent() : null;
+    }
+    @GetMapping("/calculator")
+    public boolean calculatorStopFactor( String regPerson, String verifiedName){
+        return stopFactorCalculator.calculatorStopFactor(regPerson, verifiedName);
     }
 }
