@@ -21,7 +21,7 @@ public class RegPerson {
     private UUID loanRequestId;
     @Column(name = "first_name")
     private String firstname;
-    @Column(name = " middle_name")
+    @Column(name = "middle_name")
     private String middlename;
     @Column(name = "last_name", nullable = false)
     private String lastname;

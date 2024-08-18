@@ -22,7 +22,7 @@ public class AccountInfo {
     @ManyToOne
     @JoinColumn(name = "credit_bureau_id", nullable = false)
     private CreditBureau creditBureau;
-    @Column(name = " account_number", nullable = false)
+    @Column(name = "account_number", nullable = false)
     private String accountNumber;
     @Column(name = "account_status", nullable = false)
     private String accountStatus;
@@ -50,6 +50,6 @@ public class AccountInfo {
     private double overdueBalance;
     @Column(name = "overdue_date")
     private LocalDate overdueDate;
-    @Column(name = " product_type_id", nullable = false)
+    @Column(name = "product_type_id", nullable = false)
     private int productTypeId;
 }

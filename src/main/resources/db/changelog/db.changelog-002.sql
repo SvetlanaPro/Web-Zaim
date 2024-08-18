@@ -2,9 +2,8 @@
 -- liquibase formatted sql
 
 -- changeset sryabukhina:1
-INSERT INTO request_content (loan_request_id, content)
-VALUES
-    ('0190e7b2-14a8-72e4-8528-89a8cd91d430', '{
+INSERT INTO request_content (id, loan_request_id, content)
+VALUES (1,'0190e7b2-14a8-72e4-8528-89a8cd91d430', '{
 	"loanRequestID": "0190e7b2-14a8-72e4-8528-89a8cd91d430",
 	"regPerson": {
 		"firstName": "Ogada",
@@ -52,8 +51,7 @@ VALUES
 		}
 	}
 }'),
-
-    ('0190e8e4-cf7b-72a5-a647-cd87e14f6715', '{
+    (2, '0190e8e4-cf7b-72a5-a647-cd87e14f6715', '{
 	"loanRequestID": "0190e8e4-cf7b-72a5-a647-cd87e14f6715",
 	"regPerson": {
 		"firstName": "Solomon",
@@ -84,8 +82,7 @@ VALUES
 		}
 	}
 }'),
-
-    ('0190e7b7-4868-73e9-8087-f2c70ea12b61', '{
+    (3, '0190e7b7-4868-73e9-8087-f2c70ea12b61', '{
 	"loanRequestID": "0190e7b7-4868-73e9-8087-f2c70ea12b61",
 	"regPerson": {
 		"firstName": "FABIAN",
@@ -100,6 +97,7 @@ VALUES
 		}
 	}
 }');
+
 
 -- changeset sryabukhina:2
 INSERT INTO reg_person (loan_request_id, first_name, middle_name, last_name)
