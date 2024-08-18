@@ -1,10 +1,9 @@
-package com.fintechiq.Web_Zaim.service;
-
-import org.apache.commons.text.similarity.LevenshteinDistance;
-import org.springframework.stereotype.Service;
+package com.fintechiq.webzaim.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.text.similarity.LevenshteinDistance;
+import org.springframework.stereotype.Service;
 
 @Service
 public class StopFactorCalculator {

@@ -1,6 +1,6 @@
-package com.fintechiq.Web_Zaim;
+package com.fintechiq.webzaim;
 
-import com.fintechiq.Web_Zaim.service.StopFactorCalculator;
+import com.fintechiq.webzaim.service.StopFactorCalculator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class StopFactorCalculatorTest {
+class StopFactorCalculatorTest {
 
     @Autowired
     private StopFactorCalculator calculator;

@@ -1,6 +1,6 @@
-package com.fintechiq.Web_Zaim.repository;
+package com.fintechiq.webzaim.repository;
 
-import com.fintechiq.Web_Zaim.entity.Settings;
+import com.fintechiq.webzaim.entity.Settings;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.fintechiq.Web_Zaim.entity;
+package com.fintechiq.webzaim.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

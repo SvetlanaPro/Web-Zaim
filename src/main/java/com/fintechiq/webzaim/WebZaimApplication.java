@@ -1,4 +1,4 @@
-package com.fintechiq.Web_Zaim;
+package com.fintechiq.webzaim;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 public class WebZaimApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(WebZaimApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(WebZaimApplication.class, args);
+    }
 }

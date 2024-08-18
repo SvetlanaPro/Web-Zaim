@@ -1,13 +1,12 @@
-package com.fintechiq.Web_Zaim.service;
+package com.fintechiq.webzaim.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fintechiq.Web_Zaim.entity.RequestContent;
-import com.fintechiq.Web_Zaim.repository.RequestContentRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
+import com.fintechiq.webzaim.entity.RequestContent;
+import com.fintechiq.webzaim.repository.RequestContentRepository;
 import java.io.IOException;
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
