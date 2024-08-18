@@ -9,5 +9,4 @@ class WebZaimApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

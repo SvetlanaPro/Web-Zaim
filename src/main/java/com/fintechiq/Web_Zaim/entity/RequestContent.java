@@ -19,6 +19,6 @@ public class RequestContent {
     private Long id;
     @Column(name = "loan_request_id", unique = true, nullable = false)
     private UUID loanRequestId;
-    @Column(nullable = false)
+    @Column(columnDefinition = "text", nullable = false)
     private String content;
 }
