@@ -15,7 +15,6 @@ public class WebZaimApplication {
     public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(WebZaimApplication.class, args);
 
-
         RequestContentRepository requestContentRepository = context.getBean(RequestContentRepository.class);
         SettingsRepository settingsRepository = context.getBean(SettingsRepository.class);
         ObjectMapper objectMapper = new ObjectMapper();

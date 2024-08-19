@@ -66,7 +66,6 @@ public class RequestContentService {
                 int maxLength = Math.max(regPair.length(), verPair.length());
                 double similarity = 1.0 - (double) distance / maxLength;
 
-
                 if (similarity > maxSimilarity) {
                     maxSimilarity = similarity;
                 }
@@ -80,11 +79,19 @@ public class RequestContentService {
 
     public List<String> generateWordPairs(String input) {
         System.out.println("Input to generateWordPairs: " + input);
-        String[] words = input.split(" ");
         var pairs = new ArrayList<String>();
-        for (var i = 0; i < words.length; i++) {
-            for (var j = i + 1; j < words.length; j++) {
-                pairs.add(words[i] + " " + words[j]);
+        if (input.contains(" ")) {
+            String[] words = input.split(" ");
+            for (var i = 0; i < words.length; i++) {
+                for (var j = i + 1; j < words.length; j++) {
+                    pairs.add(words[i] + " " + words[j]);
+                }
+            }
+        } else {
+            for (var i = 0; i < input.length(); i++) {
+                for (var j = i + 1; j < input.length(); j++) {
+                    pairs.add(input.substring(i, i + 1) + input.substring(j, j + 1));
+                }
             }
         }
         System.out.println("Generated pairs: " + pairs);
