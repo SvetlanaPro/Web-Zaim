@@ -1,50 +1,81 @@
 package com.fintechiq.webzaim;
 
-import com.fintechiq.webzaim.service.StopFactorCalculator;
+import com.fintechiq.webzaim.entity.Settings;
+import com.fintechiq.webzaim.repository.SettingsRepository;
+import com.fintechiq.webzaim.service.RequestContentService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ActiveProfiles("test")
 class StopFactorCalculatorTest {
 
-    @Autowired
-    private StopFactorCalculator calculator;
+
+    @M
+    private SettingsRepository settingsRepository;
+
+    @InjectMocks
+    private RequestContentService requestContentService;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
     void testCalculatorStopFactor_SimilarNames() {
-        String regPerson = "Ogada Isaak Abraham Samuel";
-        String verifiedName = "OGADA Abraham ISAAK Samuel";
-        boolean result = calculator.calculatorStopFactor(regPerson, verifiedName);
+        Settings settings = new Settings();
+        settings.setKey("distanceRatioThreshold");
+        settings.setValue("0.9");
+        when(settingsRepository.findByKey("distanceRatioThreshold")).thenReturn(Optional.of(settings));
+
+        String regPerson = "Ogada Isaak";
+        String verifiedName = "OGADA ISAAK";
+        boolean result = requestContentService.calculatorStopFactor(regPerson, verifiedName);
         assertTrue(result);
     }
 
     @Test
     void testCalculatorStopFactor_DifferentNames() {
+        Settings settings = new Settings();
+        settings.setKey("distanceRatioThreshold");
+        settings.setValue("0.9");
+        when(settingsRepository.findByKey("distanceRatioThreshold")).thenReturn(Optional.of(settings));
+
         String regPerson = "Ogada Isaak Abraham Samuel";
         String verifiedName = "Solomon Awich";
-        assertFalse(calculator.calculatorStopFactor(regPerson, verifiedName));
+        boolean result = requestContentService.calculatorStopFactor(regPerson, verifiedName);
+        assertFalse(result);
     }
 
     @Test
-    void testGeneratWordPairs() {
+    void testGenerateWordPairs() {
         String input = "Ogada Isaac";
-        List<String> pairs = List.of("OgadaIsaac");
-        assertEquals(pairs, calculator.generateWordPairs(input));
+        List<String> expectedPairs = List.of("OgadaIsaac");
+        List<String> actualPairs = requestContentService.generateWordPairs(input);
+        assertEquals(expectedPairs, actualPairs);
     }
 
     @Test
-    void testGeneratWordPairs_EmptyInput() {
+    void testGenerateWordPairs_EmptyInput() {
         String input = "";
-        List<String> pairs = List.of();
-        assertEquals(pairs, calculator.generateWordPairs(input));
+        List<String> expectedPairs = List.of();
+        List<String> actualPairs = requestContentService.generateWordPairs(input);
+        assertEquals(expectedPairs, actualPairs);
     }
 }
+
