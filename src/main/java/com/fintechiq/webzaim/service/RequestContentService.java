@@ -40,8 +40,22 @@ public class RequestContentService {
 
         double distanceRatioThreshold = Double.parseDouble(settings.getValue());
 
+        // Проверка строк regPerson и verifiedName
+        if (regPerson == null || regPerson.trim().isEmpty()) {
+            throw new IllegalArgumentException("regPerson is empty or null");
+        }
+        if (verifiedName == null || verifiedName.trim().isEmpty()) {
+            throw new IllegalArgumentException("verifiedName is empty or null");
+        }
+
+        System.out.println("regPerson: " + regPerson);
+        System.out.println("verifiedName: " + verifiedName);
+
         var regPersonPairs = generateWordPairs(regPerson);
         var verifiedNamePairs = generateWordPairs(verifiedName);
+
+        System.out.println("Generated word pairs for regPerson: " + regPersonPairs);
+        System.out.println("Generated word pairs for verifiedName: " + verifiedNamePairs);
 
         var levenshtein = new LevenshteinDistance();
         double maxSimilarity = 0.0;
@@ -52,23 +66,28 @@ public class RequestContentService {
                 int maxLength = Math.max(regPair.length(), verPair.length());
                 double similarity = 1.0 - (double) distance / maxLength;
 
+
                 if (similarity > maxSimilarity) {
                     maxSimilarity = similarity;
                 }
             }
         }
-//        return maxSimilarity >= distanceRatioThreshold;
-        return false; // временно, чтобы метод компилировался
+        System.out.println("Max similarity: " + maxSimilarity);
+        System.out.println("Threshold: " + distanceRatioThreshold);
+        System.out.println("Result: " + (maxSimilarity >= distanceRatioThreshold));
+      return maxSimilarity >= distanceRatioThreshold;
     }
 
     public List<String> generateWordPairs(String input) {
+        System.out.println("Input to generateWordPairs: " + input);
         String[] words = input.split(" ");
         var pairs = new ArrayList<String>();
         for (var i = 0; i < words.length; i++) {
             for (var j = i + 1; j < words.length; j++) {
-                pairs.add(words[i] + words[j]);
+                pairs.add(words[i] + " " + words[j]);
             }
         }
+        System.out.println("Generated pairs: " + pairs);
         return pairs;
     }
 }

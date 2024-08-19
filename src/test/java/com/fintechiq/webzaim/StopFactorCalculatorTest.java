@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
@@ -25,10 +26,10 @@ import static org.mockito.Mockito.when;
 class StopFactorCalculatorTest {
 
 
-    @M
+    @MockBean
     private SettingsRepository settingsRepository;
 
-    @InjectMocks
+    @Autowired
     private RequestContentService requestContentService;
 
     @BeforeEach
@@ -76,6 +77,18 @@ class StopFactorCalculatorTest {
         List<String> expectedPairs = List.of();
         List<String> actualPairs = requestContentService.generateWordPairs(input);
         assertEquals(expectedPairs, actualPairs);
+    }
+    @Test
+    void testCalculatorStopFactor_MultipleWords() {
+        Settings settings = new Settings();
+        settings.setKey("distanceRatioThreshold");
+        settings.setValue("0.5");
+        when(settingsRepository.findByKey("distanceRatioThreshold")).thenReturn(Optional.of(settings));
+
+        String regPerson = "Ogada Isaak Abraham Samuel";
+        String verifiedName = "Ogada Isaak Solomon Awich";
+        boolean result = requestContentService.calculatorStopFactor(regPerson, verifiedName);
+        assertTrue(result);
     }
 }
 
