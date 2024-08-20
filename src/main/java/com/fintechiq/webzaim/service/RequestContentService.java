@@ -47,13 +47,17 @@ public class RequestContentService {
         if (verifiedName == null || verifiedName.trim().isEmpty()) {
             throw new IllegalArgumentException("verifiedName is empty or null");
         }
+        regPerson = regPerson.toLowerCase();
+        verifiedName = verifiedName.toLowerCase();
 
+        System.out.println("-------------------------------------------------------------");
         System.out.println("regPerson: " + regPerson);
         System.out.println("verifiedName: " + verifiedName);
 
         var regPersonPairs = generateWordPairs(regPerson);
         var verifiedNamePairs = generateWordPairs(verifiedName);
 
+        System.out.println("-------------------------------------------------------------");
         System.out.println("Generated word pairs for regPerson: " + regPersonPairs);
         System.out.println("Generated word pairs for verifiedName: " + verifiedNamePairs);
 
@@ -71,6 +75,7 @@ public class RequestContentService {
                 }
             }
         }
+        System.out.println("-------------------------------------------------------------");
         System.out.println("Max similarity: " + maxSimilarity);
         System.out.println("Threshold: " + distanceRatioThreshold);
         System.out.println("Result: " + (maxSimilarity >= distanceRatioThreshold));
@@ -85,12 +90,14 @@ public class RequestContentService {
             for (var i = 0; i < words.length; i++) {
                 for (var j = i + 1; j < words.length; j++) {
                     pairs.add(words[i] + " " + words[j]);
+                    pairs.add(words[j] + " " + words[i]);
                 }
             }
         } else {
             for (var i = 0; i < input.length(); i++) {
                 for (var j = i + 1; j < input.length(); j++) {
                     pairs.add(input.substring(i, i + 1) + input.substring(j, j + 1));
+                    pairs.add(input.substring(j, j + 1) + input.substring(i, i + 1));
                 }
             }
         }

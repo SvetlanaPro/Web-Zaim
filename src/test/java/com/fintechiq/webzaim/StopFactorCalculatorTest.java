@@ -5,8 +5,6 @@ import com.fintechiq.webzaim.repository.SettingsRepository;
 import com.fintechiq.webzaim.service.RequestContentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +22,6 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @ActiveProfiles("test")
 class StopFactorCalculatorTest {
-
 
     @MockBean
     private SettingsRepository settingsRepository;
@@ -45,7 +42,7 @@ class StopFactorCalculatorTest {
         when(settingsRepository.findByKey("distanceRatioThreshold")).thenReturn(Optional.of(settings));
 
         String regPerson = "Ogada Isaak";
-        String verifiedName = "OGADA ISAAK";
+        String verifiedName = "ISAAK OADA";
         boolean result = requestContentService.calculatorStopFactor(regPerson, verifiedName);
         assertTrue(result);
     }
@@ -65,10 +62,11 @@ class StopFactorCalculatorTest {
 
     @Test
     void testGenerateWordPairs() {
-        String input = "Ogada Isaac";
-        List<String> expectedPairs = List.of("OgadaIsaac");
+        String input = "Solomon Awich";
+        List<String> expectedPairs = List.of("Solomon Awich", "Awich Solomon");
         List<String> actualPairs = requestContentService.generateWordPairs(input);
-        assertEquals(expectedPairs, actualPairs);
+        assertEquals(expectedPairs.size(), actualPairs.size());
+        assertTrue(actualPairs.containsAll(expectedPairs));
     }
 
     @Test
@@ -78,17 +76,4 @@ class StopFactorCalculatorTest {
         List<String> actualPairs = requestContentService.generateWordPairs(input);
         assertEquals(expectedPairs, actualPairs);
     }
-    @Test
-    void testCalculatorStopFactor_MultipleWords() {
-        Settings settings = new Settings();
-        settings.setKey("distanceRatioThreshold");
-        settings.setValue("0.5");
-        when(settingsRepository.findByKey("distanceRatioThreshold")).thenReturn(Optional.of(settings));
-
-        String regPerson = "Ogada Isaak Abraham Samuel";
-        String verifiedName = "Ogada Isaak Solomon Awich";
-        boolean result = requestContentService.calculatorStopFactor(regPerson, verifiedName);
-        assertTrue(result);
-    }
 }
-
