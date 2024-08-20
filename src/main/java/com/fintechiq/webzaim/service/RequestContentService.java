@@ -4,19 +4,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fintechiq.webzaim.entity.RequestContent;
 import com.fintechiq.webzaim.entity.Settings;
 import com.fintechiq.webzaim.repository.RequestContentRepository;
-
+import com.fintechiq.webzaim.repository.SettingsRepository;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.fintechiq.webzaim.repository.SettingsRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class RequestContentService {
+
+    private static final String SEPARATOR = "-------------------------------------------------------------";
 
     private final RequestContentRepository requestContentRepository;
     private final ObjectMapper objectMapper;
@@ -32,15 +34,12 @@ public class RequestContentService {
     }
 
     public boolean calculatorStopFactor(String regPerson, String verifiedName) {
-        System.out.println("Looking for settings with key: distanceRatioThreshold");
+        log.info("Looking for settings with key: distanceRatioThreshold");
 
-        Settings settings = settingsRepository.findByKey("distanceRatioThreshold")
-                .orElseThrow(() -> new IllegalArgumentException("Settings for 'distanceRatioThreshold' not found or has null value"));
-        System.out.println("Found settings: key=" + settings.getKey() + ", value=" + settings.getValue());
+        Settings settings = settingsRepository.findByKey("distanceRatioThreshold").orElseThrow(() -> 
+                new IllegalArgumentException("Settings for 'distanceRatioThreshold' not found or has null value"));
+        log.info("Found settings: key={}, value={}", settings.getKey(), settings.getValue());
 
-        double distanceRatioThreshold = Double.parseDouble(settings.getValue());
-
-        // Проверка строк regPerson и verifiedName
         if (regPerson == null || regPerson.trim().isEmpty()) {
             throw new IllegalArgumentException("regPerson is empty or null");
         }
@@ -50,16 +49,16 @@ public class RequestContentService {
         regPerson = regPerson.toLowerCase();
         verifiedName = verifiedName.toLowerCase();
 
-        System.out.println("-------------------------------------------------------------");
-        System.out.println("regPerson: " + regPerson);
-        System.out.println("verifiedName: " + verifiedName);
+        log.info(SEPARATOR);
+        log.info("regPerson: {}", regPerson);
+        log.info("verifiedName: {}", verifiedName);
 
         var regPersonPairs = generateWordPairs(regPerson);
         var verifiedNamePairs = generateWordPairs(verifiedName);
 
-        System.out.println("-------------------------------------------------------------");
-        System.out.println("Generated word pairs for regPerson: " + regPersonPairs);
-        System.out.println("Generated word pairs for verifiedName: " + verifiedNamePairs);
+        log.info(SEPARATOR);
+        log.info("Generated word pairs for regPerson: {}", regPersonPairs);
+        log.info("Generated word pairs for verifiedName: {}", verifiedNamePairs);
 
         var levenshtein = new LevenshteinDistance();
         double maxSimilarity = 0.0;
@@ -75,15 +74,18 @@ public class RequestContentService {
                 }
             }
         }
-        System.out.println("-------------------------------------------------------------");
-        System.out.println("Max similarity: " + maxSimilarity);
-        System.out.println("Threshold: " + distanceRatioThreshold);
-        System.out.println("Result: " + (maxSimilarity >= distanceRatioThreshold));
-      return maxSimilarity >= distanceRatioThreshold;
+
+        double distanceRatioThreshold = Double.parseDouble(settings.getValue());
+
+        log.info(SEPARATOR);
+        log.info("Max similarity: {}", maxSimilarity);
+        log.info("Threshold: {}", distanceRatioThreshold);
+        log.info("Result: {}", maxSimilarity >= distanceRatioThreshold);
+        return maxSimilarity >= distanceRatioThreshold;
     }
 
     public List<String> generateWordPairs(String input) {
-        System.out.println("Input to generateWordPairs: " + input);
+        log.info("Input to generateWordPairs: {}", input);
         var pairs = new ArrayList<String>();
         if (input.contains(" ")) {
             String[] words = input.split(" ");
@@ -96,12 +98,12 @@ public class RequestContentService {
         } else {
             for (var i = 0; i < input.length(); i++) {
                 for (var j = i + 1; j < input.length(); j++) {
-                    pairs.add(input.substring(i, i + 1) + input.substring(j, j + 1));
-                    pairs.add(input.substring(j, j + 1) + input.substring(i, i + 1));
+                    pairs.add(input.charAt(i) + input.substring(j, j + 1));
+                    pairs.add(input.charAt(j) + input.substring(i, i + 1));
                 }
             }
         }
-        System.out.println("Generated pairs: " + pairs);
+        log.info("Generated pairs: {}", pairs);
         return pairs;
     }
 }
