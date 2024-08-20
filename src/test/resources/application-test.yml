@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: Web-Zaim-Test
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+  main:
+    allow-bean-definition-overriding: true
