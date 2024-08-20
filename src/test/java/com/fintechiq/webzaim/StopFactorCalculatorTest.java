@@ -3,9 +3,7 @@ package com.fintechiq.webzaim;
 import com.fintechiq.webzaim.entity.Settings;
 import com.fintechiq.webzaim.repository.SettingsRepository;
 import com.fintechiq.webzaim.service.RequestContentService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -28,11 +26,6 @@ class StopFactorCalculatorTest {
 
     @Autowired
     private RequestContentService requestContentService;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     void testCalculatorStopFactor_SimilarNames() {

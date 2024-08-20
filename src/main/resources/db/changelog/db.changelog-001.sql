@@ -8,6 +8,11 @@ CREATE TABLE settings (
                           value VARCHAR(255) NOT NULL
 );
 
+COMMENT ON TABLE settings IS 'таблица настроек приложения';
+COMMENT ON COLUMN settings.id IS 'Уникальный идентификатор';
+COMMENT ON COLUMN settings.key IS 'Ключ настройки';
+COMMENT ON COLUMN settings.value IS 'Значение настройки';
+
 INSERT INTO settings (key, value) VALUES ('distanceRatioThreshold', '0.9');
 
 -- changeset sryabukhina:2
@@ -16,6 +21,10 @@ CREATE TABLE request_content (
                                  loan_request_id UUID UNIQUE NOT NULL,
                                  content JSON NOT NULL
 );
+COMMENT ON TABLE request_content IS 'таблица с запросом';
+COMMENT ON COLUMN request_content.id IS 'Уникальный идентификатор';
+COMMENT ON COLUMN request_content.loan_request_id IS 'Уникальный идентификатор запроса';
+COMMENT ON COLUMN request_content.content IS 'Содержимое JSON';
 
 -- changeset sryabukhina:3
 CREATE TABLE reg_person (
